@@ -9,10 +9,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
 
     <title>
+        Django Site
         {% if title %}
-            Django Site - {{ title }}
-        {% else %}
-            Django Site
+         - {{ title }}
         {% endif %}
     </title>
 </head>
@@ -26,13 +25,13 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="/">Home</a>
-              <a class="nav-item nav-link" href="/about">About</a>
+              <a class="nav-item nav-link" href="{% url 'blog-home' %}">Home</a>
+              <a class="nav-item nav-link" href="{% url 'blog-about' %}">About</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
               <a class="nav-item nav-link" href="#">Login</a>
-              <a class="nav-item nav-link" href="#">Register</a>
+              <a class="nav-item nav-link" href="{% url 'register' %}">Register</a>
             </div>
           </div>
         </div>
@@ -41,7 +40,14 @@
     <main role="main" class="container">
       <div class="row">
         <div class="col-md-8">
-          {% block content %}{% endblock %}
+          {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+              {% endfor %}
+          {% endif %}
+          {% block content %}{% endblock content %}
         </div>
         <div class="col-md-4">
           <div class="content-section">
